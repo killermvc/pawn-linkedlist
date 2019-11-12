@@ -1,0 +1,24 @@
+{
+	"user": "Killermvc",
+	"repo": "pawn-linkedlist",
+	"entry": "test.pwn",
+	"output": "test.amx",
+	"dependencies": [
+		"sampctl/samp-stdlib",
+		"killermvc/pawn-vector:1.2.x"
+	],
+	"build": {
+		"name": "dev",
+		"version": "3.10.8"
+	},
+	"runtime": {
+		"version": "0.3.7",
+		"mode": "main",
+		"echo": "Loading configuration...",
+		"rcon_password": "password",
+		"port": 8192,
+		"hostname": "SA-MP Server",
+		"maxplayers": 50,
+		"language": ""
+	}
+}
