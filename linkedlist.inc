@@ -24,15 +24,15 @@
 */
 
 static stock Llist_SetCount(Llist:list, count) {
-    return Vec_SetValue(list, LLIST_COUNT_INDEX, count);
+    return Vec_SetValue(Vec:list, LLIST_COUNT_INDEX, count);
 }
 
 static stock Llist_SetFirst(Llist:list, Node:node) {
-    return Vec_SetValue(list, LLIST_FIRST_INDEX, _:node);
+    return Vec_SetValue(Vec:list, LLIST_FIRST_INDEX, _:node);
 }
 
 static stock Llist_SetLast(Llist:list, Node:node) {
-    return Vec_SetValue(list, LLIST_LAST_INDEX, _:node);
+    return Vec_SetValue(Vec:list, LLIST_LAST_INDEX, _:node);
 }
 
 
@@ -40,19 +40,19 @@ static stock Llist_SetLast(Llist:list, Node:node) {
     api
 */
 
-stock Llist:Llist_New(value = 0, Node:first = INVALID_NODE) {
+stock Llist:Llist_New(Node:first = INVALID_NODE) {
     new Vec:list = Vec_New(3), Node:last, count;
-    Vec_ToggleFixedSize(node, true);
+    Vec_ToggleFixedSize(list, true);
 
     if(first != INVALID_NODE) {
-        last = Node_GetLast(first, count)
+        last = Node_Last(first, count);
     } else {
         last = INVALID_NODE;
     }
 
-    Vec_SetValue(node, LLIST_FIRST_INDEX, _:first);
-    Vec_SetValue(node, LLIST_LAST_INDEX, _:last);
-    Vec_SetValue(node, LLIST_COUNT_INDEX, count);
+    Vec_SetValue(list, LLIST_FIRST_INDEX, _:first);
+    Vec_SetValue(list, LLIST_LAST_INDEX, _:last);
+    Vec_SetValue(list, LLIST_COUNT_INDEX, count);
 
     return Llist:list;
 }
@@ -62,14 +62,14 @@ stock Llist_Count(Llist:list) {
 }
 
 stock Node:Llist_First(Llist:list) {
-    return Node:Vec_GetValue(list, LLIST_FIRST_INDEX);
+    return Node:Vec_GetValue(Vec:list, LLIST_FIRST_INDEX);
 }
 
 stock Node:Llist_Last(Llist:list) {
-    return Node:Vec_GetValue(list, LLIST_LAST_INDEX);
+    return Node:Vec_GetValue(Vec:list, LLIST_LAST_INDEX);
 }
 
-stock Llist_AddNodeAfter(Llist:list, Node:Node, Node:newNode) {
+stock Llist_AddNodeAfter(Llist:list, Node:node, Node:newNode) {
     new Node:next = Node_Next(node);
 
     Node_SetNext(node, newNode);
@@ -129,7 +129,7 @@ stock Llist_RemoveValue(Llist:list, value) {
 
     while(node != INVALID_NODE) {
         if(Node_Value(node) == value) {
-            Llist_Remove(node);
+            Llist_Remove(list, node);
             return 0;
         }
         node = Node_Next(node);
@@ -138,7 +138,7 @@ stock Llist_RemoveValue(Llist:list, value) {
 }
 
 stock Llist_AddNodeBefore(Llist:list, Node:node, Node:newNode) {
-    new Node:prev = Node_PRev(node);
+    new Node:prev = Node_Prev(node);
 
     Node_SetPrev(node, newNode);
     Node_SetNext(newNode, node);
@@ -204,9 +204,7 @@ stock Llist_Clear(Llist:list, bool:delete = true) {
         new Node:node = Llist_First(list);
 
         while(node != INVALID_NODE) {
-            if(Node_Value(node) == value) {
-                Vec_Delete(Vec:node);
-            }
+            Vec_Delete(Vec:node);
             node = Node_Next(node);
         }
     }

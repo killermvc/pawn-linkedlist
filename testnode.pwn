@@ -9,4 +9,5 @@ Test:GetLast() {
     new Node:node = Node_Last(first, count);
 
     ASSERT(node == last && count == 4);
+
 }
