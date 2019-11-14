@@ -7,6 +7,9 @@
 
 stock Node:Node_New(value = 0, Node:prev = INVALID_NODE, Node:next = INVALID_NODE) {
     new Vec:node = Vec_New(3);
+    if(node == INVALID_VECTOR_ID) {
+        return INVALID_NODE;
+    }
     Vec_ToggleFixedSize(node, true);
 
     Vec_SetValue(node, NODE_VAL_INDEX, value);
@@ -40,7 +43,7 @@ stock Node_Value(Node:node) {
     return Vec_GetValue(Vec:node, NODE_VAL_INDEX);
 }
 
-stock Node:Node_Last(Node:first, &count) {
+stock Node:Node_FindLast(Node:first, &count) {
     new Node:node = first, Node:next = Node_Next(first);
     count = 1;
     while(next != INVALID_NODE) {
@@ -50,3 +53,15 @@ stock Node:Node_Last(Node:first, &count) {
     }
     return node;
 }
+
+stock Node:Node_FindFirst(Node:last, &count) {
+    new Node:node = last, Node:prev = Node_Prev(last);
+    count = 1;
+    while(prev != INVALID_NODE) {
+        count++;
+        prev = Node_Prev(prev);
+        node = Node_Prev(node);
+    }
+    return node;
+}
+
